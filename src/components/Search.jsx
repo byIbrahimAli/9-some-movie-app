@@ -1,10 +1,11 @@
 import React from 'react'
+import SearchIcon from './icons/SearchIcon'
 
 const Search = ({ searchTerm, setSearchTerm }) => {
   return (
     <div className="search">
       <div>
-        <img src="/search.svg" alt="search" />
+        <SearchIcon className="icon-search" />
         <input
           type="text"
           placeholder="Search before food gets cold"

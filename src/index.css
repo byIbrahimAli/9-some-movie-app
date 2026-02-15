@@ -10,6 +10,7 @@
   --color-neon-cyan: #00f5ff;
   --color-neon-magenta: #ff00aa;
   --color-neon-blue: #0088ff;
+  --color-neon-green: #39ff14;
   --color-neon-glow: rgba(0, 245, 255, 0.15);
 
   --color-light-100: #e0e4e8;
@@ -103,12 +104,13 @@
       @apply relative flex items-center;
     }
 
-    & img {
-      @apply absolute left-0 h-12 w-12 opacity-60;
+    & .icon-search {
+      @apply absolute left-0 h-7 w-7 opacity-70;
+      filter: drop-shadow(0 0 5px var(--color-neon-green));
     }
 
     & input {
-      @apply w-full bg-transparent py-2 sm:pr-10 pl-[3.75rem] text-base text-light-100 placeholder-gray-200 outline-hidden;
+      @apply w-full bg-transparent py-2 sm:pr-10 pl-10 text-base text-light-100 placeholder-gray-200 outline-hidden;
     }
 
     & input:focus {
@@ -168,8 +170,9 @@
       @apply flex flex-row items-center gap-1;
     }
 
-    & .rating img {
-      @apply size-4 object-contain;
+    & .rating .icon-rating-star {
+      @apply size-6 shrink-0;
+      filter: drop-shadow(0 0 5px var(--color-neon-green));
     }
 
     & .rating p {
