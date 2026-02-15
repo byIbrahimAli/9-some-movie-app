@@ -194,3 +194,192 @@
     display: none;
   }
 }
+
+/* --- Cyberpunk / Matrix loading screen (full space, neon theme) --- */
+.loading-screen {
+  position: relative;
+  min-height: 70vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: linear-gradient(
+    180deg,
+    var(--color-primary) 0%,
+    rgba(5, 5, 8, 0.97) 50%,
+    var(--color-primary) 100%
+  );
+}
+
+.loading-rain {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: space-around;
+  gap: 0;
+  pointer-events: none;
+}
+
+.loading-rain-column {
+  flex: 1;
+  min-width: 0;
+  max-width: 1.5rem;
+  height: 100%;
+  overflow: hidden;
+}
+
+.loading-rain-inner {
+  display: flex;
+  flex-direction: column;
+  height: 200%;
+  animation: loading-rain-fall linear infinite;
+  animation-delay: var(--rain-delay, 0s);
+  animation-duration: var(--rain-duration, 3s);
+}
+
+.loading-rain-text {
+  flex: 0 0 50%;
+  font-family: 'Rajdhani', monospace;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.4;
+  white-space: pre;
+  color: var(--color-neon-cyan);
+  text-shadow: 0 0 8px var(--color-neon-cyan);
+  opacity: 0.85;
+  padding: 0 0.15rem;
+}
+
+.loading-rain-column:nth-child(4n) .loading-rain-text {
+  color: var(--color-neon-magenta);
+  text-shadow: 0 0 8px var(--color-neon-magenta);
+}
+
+.loading-rain-column:nth-child(5n) .loading-rain-text {
+  color: var(--color-neon-blue);
+  text-shadow: 0 0 8px var(--color-neon-blue);
+}
+
+@keyframes loading-rain-fall {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+.loading-overlay {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 2rem;
+}
+
+.loading-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(2.5rem, 8vw, 4.5rem);
+  font-weight: 700;
+  letter-spacing: 0.4em;
+  color: var(--color-neon-cyan);
+  text-shadow:
+    0 0 20px var(--color-neon-cyan),
+    0 0 40px rgba(0, 245, 255, 0.5),
+    0 0 60px rgba(255, 0, 170, 0.15);
+  margin: 0;
+  animation: loading-title-pulse 1.5s ease-in-out infinite;
+}
+
+.loading-subtitle {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(0.65rem, 2vw, 0.85rem);
+  font-weight: 500;
+  letter-spacing: 0.5em;
+  color: var(--color-neon-cyan);
+  opacity: 0.7;
+  margin: 1rem 0 0;
+  text-transform: uppercase;
+  text-shadow:
+    0 0 10px var(--color-neon-cyan),
+    0 0 20px rgba(0, 136, 255, 0.3);
+}
+
+@keyframes loading-title-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    text-shadow:
+      0 0 20px var(--color-neon-cyan),
+      0 0 40px rgba(0, 245, 255, 0.5),
+      0 0 60px rgba(255, 0, 170, 0.15);
+  }
+  50% {
+    opacity: 0.9;
+    text-shadow:
+      0 0 30px var(--color-neon-cyan),
+      0 0 60px rgba(0, 245, 255, 0.6),
+      0 0 80px rgba(255, 0, 170, 0.2);
+  }
+}
+
+.loading-scanline {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 245, 255, 0.02) 2px,
+      rgba(0, 245, 255, 0.02) 4px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 8px,
+      rgba(255, 0, 170, 0.015) 8px,
+      rgba(255, 0, 170, 0.015) 10px
+    );
+  pointer-events: none;
+}
+
+.loading-wave {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: rgba(0, 245, 255, 0.1);
+  overflow: hidden;
+  z-index: 2;
+}
+
+.loading-wave-bar {
+  height: 100%;
+  width: 60%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-neon-cyan),
+    var(--color-neon-blue),
+    var(--color-neon-magenta),
+    var(--color-neon-cyan),
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: loading-wave-sweep 2s ease-in-out infinite;
+  box-shadow:
+    0 0 20px var(--color-neon-cyan),
+    0 0 30px rgba(255, 0, 170, 0.4);
+}
+
+@keyframes loading-wave-sweep {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(250%);
+  }
+}
