@@ -1,4 +1,4 @@
-const STAR_COLOR = '#39ff14'
+const STAR_COLOR = '#00f5ff'
 
 const StarIcon = ({ className = '', ...props }) => (
   <svg

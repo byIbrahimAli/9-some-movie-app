@@ -3,7 +3,9 @@ import { useDebounce } from 'react-use'
 import Search from './components/Search'
 import Loading from './components/Loading'
 import MovieCard from './components/MovieCard'
+import PosterImage from './components/PosterImage'
 import { updateSearchCount } from './services/updateSearchCount'
+import { fetchTopSearches } from './services/fetchTopSearches'
 
 const API_BASE_URL = 'https://api.themoviedb.org/3/'
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY
@@ -22,6 +24,8 @@ const App = () => {
   const [movieList, setMovieList] = useState([])
   const [loading, setLoading] = useState(false)
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
+  const [topSearches, setTopSearches] = useState([])
+  const [topSearchesLoading, setTopSearchesLoading] = useState(false)
 
   useDebounce(() => setDebouncedSearchTerm(searchTerm), 500, [searchTerm])
 
@@ -64,9 +68,30 @@ const App = () => {
     }
   }
 
+  const loadTopSearches = async (getIsCancelled = () => false) => {
+    setTopSearchesLoading(true)
+    try {
+      const data = await fetchTopSearches(5)
+      if (!getIsCancelled()) setTopSearches(data)
+    } catch (err) {
+      if (!getIsCancelled()) console.error('Top searches fetch failed', err)
+    } finally {
+      if (!getIsCancelled()) setTopSearchesLoading(false)
+    }
+  }
+
   useEffect(() => {
     fetchMovies(debouncedSearchTerm)
   }, [debouncedSearchTerm])
+
+  // Cancelled guard: avoid setState after unmount (e.g. user navigates away before fetch resolves). Without it: React warnings and possible memory leaks or state updates on an unmounted component.
+  useEffect(() => {
+    let cancelled = false
+    loadTopSearches(() => cancelled)
+    return () => {
+      cancelled = true
+    }
+  }, [])
 
   return (
     <main>
@@ -82,8 +107,39 @@ const App = () => {
           <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         </header>
 
+        {topSearchesLoading ? (
+          <Loading />
+        ) : (
+          <section className="trending">
+            <h2>Trending Movies</h2>
+            {console.log(topSearches)}
+            <ul>
+              {topSearches.map((movie, index) => (
+                <li key={movie.search_term} className="trending-item">
+                  <div className="trending-spine" aria-hidden>
+                    {Array.from({ length: 8 }, (_, i) => (
+                      <span
+                        key={i}
+                        className="trending-spine-number"
+                      >
+                        {index + 1}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="trending-poster-slot">
+                    <PosterImage
+                      src={movie.poster_url}
+                      alt={movie.search_term}
+                    />
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
         <section className="all-movies">
-          <h2 className="mt-[40px]">All Movies</h2>
+          <h2>All Movies</h2>
           {loading ? (
             <Loading />
           ) : errorMessage ? (

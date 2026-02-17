@@ -1,4 +1,4 @@
-const SEARCH_COLOR = '#39ff14'
+const SEARCH_COLOR = '#00f5ff'
 
 const SearchIcon = ({ className = '', ...props }) => (
   <svg

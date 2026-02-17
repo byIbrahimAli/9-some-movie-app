@@ -1,23 +1,16 @@
-import React from 'react'
 import StarIcon from './icons/StarIcon'
+import PosterImage from './PosterImage'
 
 const MovieCard = ({
   movie: { title, vote_average, poster_path, original_language, release_date },
 }) => {
+  const posterSrc = poster_path
+    ? `https://image.tmdb.org/t/p/w500/${poster_path}`
+    : null
+
   return (
     <div className="movie-card">
-      {poster_path ? (
-        <img
-          src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
-          alt="title"
-        />
-      ) : (
-        <div className="movie-card-poster-placeholder" aria-hidden>
-          <span className="movie-card-poster-placeholder-text">
-            CORRUPT DATA
-          </span>
-        </div>
-      )}
+      <PosterImage src={posterSrc} alt={title} />
 
       <div className="mt-4">
         <h3>{title}</h3>
