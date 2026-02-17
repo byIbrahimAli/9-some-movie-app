@@ -7,6 +7,10 @@ A React movie discovery app with a cyberpunk/Matrix-inspired UI. Search movies v
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38bdf8?logo=tailwindcss)
 ![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-3ecf8e?logo=supabase)
 
+### App demo
+
+![App demo](public/app%20demo.gif)
+
 ---
 
 ## Features
